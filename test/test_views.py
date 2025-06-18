@@ -1,22 +1,23 @@
-from flask import request, jsonify
 from hello_world import app
-from hello_world.formater import get_formatted, SUPPORTED, PLAIN
+from hello_world.formater import SUPPORTED
+import json
 
-moje_imie = "Oliwia"
-msg = "Hello World!"
+def test_outputs():
+    client = app.test_client()
+    response = client.get('/outputs')
+    assert response.status_code == 200
 
+    text = response.data.decode()
+    outputs = [o.strip() for o in text.split(',')]
+    assert set(outputs) == set(SUPPORTED)
 
-@app.route('/')
-def index():
-    output = request.args.get('output') or PLAIN
-    formatted = get_formatted(msg, moje_imie, output.lower())
+def test_msg_with_output():
+    client = app.test_client()
+    response = client.get('/?output=json')
+    assert response.status_code == 200
 
-    if output.lower() == 'json':
-        return jsonify({"imie": moje_imie, "msg": msg})
-    else:
-        return formatted
-
-
-@app.route('/outputs')
-def supported_output():
-    return ", ".join(SUPPORTED)
+    data = json.loads(response.data.decode())
+    assert data == {
+        "imie": "Oliwia",
+        "msg": "Hello World!"
+    }

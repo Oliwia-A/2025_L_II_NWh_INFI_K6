@@ -12,7 +12,7 @@ def index():
     formatted = get_formatted(msg, moje_imie, output.lower())
 
     if output.lower() == 'json':
-        return jsonify({"message": formatted})
+        return jsonify({"imie": moje_imie, "msg": msg})
     else:
         return formatted
 
