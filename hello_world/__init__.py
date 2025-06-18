@@ -2,4 +2,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-import hello_world.views  # noqa: F401, E402
+@app.route("/")
+def hello():
+    return "Hello, Oliwia!"

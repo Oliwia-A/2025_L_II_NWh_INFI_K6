@@ -1,4 +1,4 @@
-.PHONY: deps lint run test docker_build docker_run
+.PHONY: deps lint run test docker_build docker_run docker_restart docker_clean
 
 deps:
 	pip install -r requirements.txt
@@ -21,3 +21,9 @@ docker_run: docker_build
 		--name hello-world-printer-dev \
 		-p 5000:5000 \
 		-d hello-world-printer
+
+docker_restart:
+	docker restart hello-world-printer-dev
+
+docker_clean:
+	-docker rm -f hello-world-printer-dev
