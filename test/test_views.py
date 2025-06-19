@@ -1,6 +1,6 @@
+import json
 from hello_world import app
 from hello_world.formater import SUPPORTED
-import json
 
 def test_outputs():
     client = app.test_client()

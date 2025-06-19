@@ -2,7 +2,4 @@ from flask import Flask
 
 app = Flask(__name__)
 
-
-@app.route("/")
-def hello():
-    return "Hello, Oliwia!"
+from hello_world import views
