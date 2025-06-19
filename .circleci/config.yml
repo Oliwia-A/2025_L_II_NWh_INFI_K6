@@ -4,7 +4,7 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10
-      - image: docker:20.10.24-dind # 🔧 backend Docker daemon
+      - image: docker:20.10.24-dind
 
     environment:
       DOCKER_HOST: tcp://localhost:2375/
@@ -14,27 +14,28 @@ jobs:
       - checkout
 
       - run:
-          name: Install deps
+          name: Install dependencies
           command: |
             pip install -r requirements.txt
             pip install -r test_requirements.txt
 
       - run:
-          name: Run lint
-          command: flake8 hello_world test
+          name: Lint
+          command: make lint
 
       - run:
-          name: Run tests
-          command: PYTHONPATH=. pytest -v -s
+          name: Tests
+          command: make test
 
-      - setup_remote_docker:  # 🔐 pozwala używać docker sock
+      - setup_remote_docker:
           docker_layer_caching: true
 
       - run:
-          name: Build Docker image
-          command: docker build -t hello-world-printer .
+          name: Docker push to DockerHub
+          command: make docker_push
+
 workflows:
   version: 2
-  basic:
+  build_and_push:
     jobs:
       - build-and-test
