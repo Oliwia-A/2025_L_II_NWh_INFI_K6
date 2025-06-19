@@ -34,5 +34,10 @@ docker_push:  ## Push Docker image to DockerHub
 	docker tag $(APP_NAME) YOUR_DOCKERHUB_USERNAME/$(APP_NAME)
 	docker push YOUR_DOCKERHUB_USERNAME/$(APP_NAME)
 
+deps:  ## Install app and test dependencies
+	pip install -r requirements.txt
+	pip install -r test_requirements.txt
+
+
 help:  ## Show list of available make commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "🔹 \033[36m%-20s\033[0m %s\n", $$1, $$2}'
