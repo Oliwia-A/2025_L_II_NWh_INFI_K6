@@ -15,7 +15,6 @@ def register_routes(app):
             return jsonify({"imie": moje_imie, "msg": msg})
         return formatted
 
-
     @app.route('/outputs')
     def supported_output():
         return ", ".join(SUPPORTED)
