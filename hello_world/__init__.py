@@ -1,4 +1,7 @@
 from flask import Flask
-from hello_world import views  # noqa: F401
 
 app = Flask(__name__)
+
+from hello_world.views import register_routes  # noqa: E402
+
+register_routes(app)
